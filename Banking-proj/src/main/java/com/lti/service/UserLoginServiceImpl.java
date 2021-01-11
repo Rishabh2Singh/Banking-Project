@@ -22,13 +22,13 @@ public class UserLoginServiceImpl implements UserLoginService{
 	public Account userLogin(int id, String password) throws UserLoginException, CustomerServiceException {
 		try {
 			if(!loginRepo.isCustomerPresent(id))
-				throw new UserLoginException("Wrong Details");
+				throw new UserLoginException("Invalid Customer");
 			int acno=loginRepo.findByLoginDetail(id, password);
 			Account account=loginRepo.fetch(Account.class, acno);
 			return account;
 		}
 		catch(NoResultException e) {
-		throw new CustomerServiceException("Incorrect email/password");
+			throw new CustomerServiceException("Incorrect email/password");
 		}
 	
 	}	
