@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="internet_banking")
 public class InternetBanking {
@@ -27,9 +29,11 @@ public class InternetBanking {
 	private String transPass;
 	private int status;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="internetBanking", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private Account account;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy="customer", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Beneficiary> beneficiaries;
 	
@@ -63,9 +67,9 @@ public class InternetBanking {
 	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
 		this.beneficiaries = beneficiaries;
 	}
-	public Account getAccount() {
-		return account;
-	}
+//	public Account getAccount() {
+//		return account;
+//	}
 	public void setAccount(Account account) {
 		this.account = account;
 	}

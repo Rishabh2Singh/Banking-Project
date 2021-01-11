@@ -58,6 +58,7 @@ public class AccountHolder {
 	@OneToOne(mappedBy="accountHolder", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private Account account;
 
+	
 	public int getId() {
 		return id;
 	}

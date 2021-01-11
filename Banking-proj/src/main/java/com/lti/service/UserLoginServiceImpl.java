@@ -18,19 +18,19 @@ public class UserLoginServiceImpl implements UserLoginService{
 	@Autowired
 	public LoginRepository loginRepo;
 
-	@Override
 	public Account userLogin(int id, String password) throws UserLoginException, CustomerServiceException {
 		try {
-			if(!loginRepo.isCustomerPresent(id))
-				throw new UserLoginException("Invalid Customer");
-			int acno=loginRepo.findByLoginDetail(id, password);
-			Account account=loginRepo.fetch(Account.class, acno);
+//			if(!loginRepo.isCustomerPresent(id))
+//				throw new UserLoginException("Invalid Customer");
+			int custid=(int) loginRepo.findByLoginDetail(id, password);
+			Account account=loginRepo.fetchAccountByCustomerId(custid);
 			return account;
 		}
 		catch(NoResultException e) {
 			throw new CustomerServiceException("Incorrect email/password");
 		}
 	
-	}	
+	}
+
 
 }
