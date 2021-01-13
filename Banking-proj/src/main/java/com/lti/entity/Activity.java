@@ -21,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Activity {
 
 	@Id
-	@SequenceGenerator(name="seq_act", initialValue=501, allocationSize=1)
+	@SequenceGenerator(name="seq_act", initialValue=508, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_act")
 	private int id;
 	
