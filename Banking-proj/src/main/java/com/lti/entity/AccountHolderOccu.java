@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tbl_accountHolderOccupation")
@@ -24,7 +24,8 @@ public class AccountHolderOccu {
 	private String income_source;
 	private long annual_income;
 	
-	@OneToOne(mappedBy="accountHolderOccu", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
+	@JsonIgnore
+	@OneToOne(mappedBy="accountHolderOccu",cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private AccountHolder accountHolder;
 	
 	public int getId() {
