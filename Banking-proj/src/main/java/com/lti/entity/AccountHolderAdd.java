@@ -16,8 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class AccountHolderAdd {
 
 	@Id
-	@SequenceGenerator(name="seq_add", initialValue=301, allocationSize=1)
+	@SequenceGenerator(name="seq_add", initialValue=306, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_add")
+	//@GeneratedValue
 	private int id;
 	
 	private String address;
@@ -80,6 +81,14 @@ public class AccountHolderAdd {
 	public void setAccountholdobj2(AccountHolder accountholdobj2) {
 		this.accountholdobj2 = accountholdobj2;
 	}
+	@Override
+	public String toString() {
+		return "AccountHolderAdd [id=" + id + ", address=" + address + ", landmark=" + landmark + ", city=" + city
+				+ ", state=" + state + ", pincode=" + pincode + ", accountholdobj1=" + accountholdobj1
+				+ ", accountholdobj2=" + accountholdobj2 + "]";
+	}
+	
+	
 	
 	
 }

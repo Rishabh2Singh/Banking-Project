@@ -25,7 +25,7 @@ public class Account {
 
 	@Id
 	@Column(name="account_no")
-	@SequenceGenerator(name="seq_acc", initialValue=100450011, allocationSize=1)
+	@SequenceGenerator(name="seq_acc", initialValue=1001345104, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_acc")
 	private long accountNo;
 	

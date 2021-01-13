@@ -21,7 +21,7 @@ public class InternetBanking {
 
 	@Id
 	@Column(name="customer_id")
-	@SequenceGenerator(name="seq_ib", initialValue=3245001, allocationSize=1)
+	@SequenceGenerator(name="seq_ib", initialValue=1356786293, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_ib")
 	private int customerId;
 	

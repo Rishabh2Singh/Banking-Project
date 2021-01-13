@@ -21,8 +21,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class AccountHolder {
 
 	@Id
-	@SequenceGenerator(name="seq_hold", initialValue=1001, allocationSize=1)
+	@SequenceGenerator(name="seq_hold", initialValue=1007, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_hold")
+	//@GeneratedValue
 	private int id;
 	
 	private String name;
@@ -32,6 +33,16 @@ public class AccountHolder {
 	
 	private long mobile;
 	
+	private String email;
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Column(name="adhar_card")
 	private long adharCard;
 	
@@ -154,6 +165,15 @@ public class AccountHolder {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
+	@Override
+	public String toString() {
+		return "AccountHolder [id=" + id + ", name=" + name + ", fatherName=" + fatherName + ", mobile=" + mobile
+				+ ", email=" + email + ", adharCard=" + adharCard + ", dob=" + dob + ", debitCard=" + debitCard
+				+ ", creditCard=" + creditCard + ", accountHolderAdd1=" + accountHolderAdd1 + ", accountHolderAdd2="
+				+ accountHolderAdd2 + ", accountHolderOccu=" + accountHolderOccu + ", account=" + account + "]";
+	}
+	
 	
 	
 }

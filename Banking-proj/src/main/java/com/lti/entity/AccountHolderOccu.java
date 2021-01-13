@@ -16,8 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class AccountHolderOccu {
 
 	@Id
-	@SequenceGenerator(name="seq_occu", initialValue=201, allocationSize=1)
+	@SequenceGenerator(name="seq_occu", initialValue=205, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_occu")
+	//@GeneratedValue
 	private int id;
 	
 	private String type;
@@ -57,6 +58,12 @@ public class AccountHolderOccu {
 	public void setAccountHolder(AccountHolder accountHolder) {
 		this.accountHolder = accountHolder;
 	}
+	@Override
+	public String toString() {
+		return "AccountHolderOccu [id=" + id + ", type=" + type + ", income_source=" + income_source
+				+ ", annual_income=" + annual_income + ", accountHolder=" + accountHolder + "]";
+	}
+	
 	
 	
 }
