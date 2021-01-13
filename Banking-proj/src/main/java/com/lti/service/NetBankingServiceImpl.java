@@ -20,17 +20,19 @@ public class NetBankingServiceImpl implements NetBankingService {
 		
 		long accNo = net.getAccountNo();
 		Account accountObj = netBankingRepository.fetch(Account.class, net.getAccountNo());
-		System.out.println(accountObj.getAccountNo());
+		//System.out.println(accountObj.getAccountNo());
 		InternetBanking intBank = new InternetBanking();
 		
 		
 		if(accountObj == null)
 		{
-			throw new Exception("Invalid AccountNumber!");
+			//throw new Exception("Invalid AccountNumber!");
+			System.out.println("Invalid AccountNumber!");
 		}
 		else if(accountObj.getStatus() != 1)
 		{
-			throw new Exception("Account not activated!");
+			//throw new Exception("Account not activated!");
+			System.out.println("Account not activated!");
 		}
 		else if(accountObj.getStatus() == 1 )
 		{

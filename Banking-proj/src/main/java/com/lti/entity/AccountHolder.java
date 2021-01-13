@@ -9,12 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tbl_accountHolder")
@@ -54,18 +53,20 @@ public class AccountHolder {
 	@Column(name="credit_card")
 	private int creditCard;
 	
-	@OneToOne
+
+	@OneToOne()
 	@JoinColumn(name="res_id")
 	private AccountHolderAdd accountHolderAdd1;
 	
-	@OneToOne
+	@OneToOne()
 	@JoinColumn(name="mail_Add")
 	private AccountHolderAdd accountHolderAdd2;
 	
-	@OneToOne
+	@OneToOne()
 	@JoinColumn(name="occu_id")
 	private AccountHolderOccu accountHolderOccu;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="accountHolder", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private Account account;
 

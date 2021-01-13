@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tbl_accountHolderAdd")
@@ -27,10 +27,12 @@ public class AccountHolderAdd {
 	private String state;
 	private int pincode;
 	
-	@OneToOne(mappedBy="accountHolderAdd1", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
+	@JsonIgnore
+	@OneToOne(mappedBy="accountHolderAdd1",cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private AccountHolder accountholdobj1;
 	
-	@OneToOne(mappedBy="accountHolderAdd2", cascade= { CascadeType.PERSIST, CascadeType.MERGE})
+	@JsonIgnore
+	@OneToOne(mappedBy="accountHolderAdd2",cascade= { CascadeType.PERSIST, CascadeType.MERGE})
 	private AccountHolder accountholdobj2;
 	
 	public int getId() {

@@ -1,23 +1,23 @@
 package com.lti.dto;
 
-public class LoginStatus extends Status {
+import com.lti.entity.Account;
 
-	//in case we want to return all the details of Customer on login
-	//then declare Customer object here-> private Customer customer; 
-	private int customerId;
-	private String password;
+public class LoginStatus {
+
+	private Account account;
+	private String message;
 	
-	public int getCustomerId() {
-		return customerId;
+	public Account getAccount() {
+		return account;
 	}
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
-	public String getPassword() {
-		return password;
+	public String getMessage() {
+		return message;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

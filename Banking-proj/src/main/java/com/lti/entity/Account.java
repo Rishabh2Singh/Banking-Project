@@ -37,6 +37,7 @@ public class Account {
 	@JoinColumn(name="holder_id")
 	private AccountHolder accountHolder;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="customer_id")
 	private InternetBanking internetBanking;
