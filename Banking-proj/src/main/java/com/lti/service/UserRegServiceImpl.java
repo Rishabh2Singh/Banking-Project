@@ -17,6 +17,9 @@ public class UserRegServiceImpl implements UserRegService {
 	@Autowired
 	public UserRepository userRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	@Transactional
 	public AccountHolder register(Registration reg) {
 		
@@ -61,10 +64,14 @@ public class UserRegServiceImpl implements UserRegService {
 		
 		Account fetAcc = (Account) userRepository.save(accReg);
 		
+		System.out.println(fetAcc.getAccountNo());
+		
+		String subject = "Account Registration Details";
+		String message ="Your A/C number is: "+fetAcc.getAccountNo();
+		emailService.sendEmail(reg.getEmail(),subject , message);
+		
 		return fetHol;
 		
-		
-	
 		
 	}
 

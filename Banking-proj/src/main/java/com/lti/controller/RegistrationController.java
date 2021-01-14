@@ -16,9 +16,6 @@ import com.lti.service.UserRegService;
 @CrossOrigin
 public class RegistrationController {
 
-//	@Autowired
-//	private UserRepository userRepository;
-	
 	@Autowired
 	private UserRegService userServ;
 	
@@ -28,10 +25,9 @@ public class RegistrationController {
 		AccountHolder accHol =  userServ.register(reg);
 		
 		return accHol.getId();
+		
+		
 	}
 	
-//	@PostMapping("/insertadd")
-//	public void insertAddress(@RequestBody AccountHolderAdd add ) {
-//		userRepository.save(add);
-//	}
+
 }
