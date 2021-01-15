@@ -22,4 +22,6 @@ public interface UserLoginService {
 	public long fetchAccountNo(int custId);
 
 	public int addActivity(Transaction transaction);
+	public int CustIdOnEmail(long acno) throws CustomerServiceException;
+	public String sendCustId(long acno) throws CustomerServiceException;
 }

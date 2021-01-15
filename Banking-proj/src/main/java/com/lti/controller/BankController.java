@@ -42,19 +42,21 @@ public class BankController {
 	@PostMapping("/login")
 	public @ResponseBody LoginStatus loginCheck(@RequestBody Login login) {
 		
-		Account acc = null;
+		Account account = null;
 		
 			try {
-				acc = loginService.userLogin(login.getCustomerId(), login.getPassword());
+				account = loginService.userLogin(login.getCustomerId(), login.getPassword());
 				LoginStatus status=new LoginStatus();
-				status.setAccount(acc);
+				status.setAccount(account);
 				status.setMessage("Login Successfully");
+//				System.out.println(acc.);
+				System.out.println(status.getAccount().getInternetBanking().getCustomerId());
 				return status;
 			} catch (UserLoginException | CustomerServiceException e) {
 				LoginStatus status=new LoginStatus();
 				status.setAccount(null);
 				status.setMessage(e.getMessage());
-				System.out.println(e.getMessage());
+//				System.out.println(e.getMessage());
 				return status;
 			}
 			
@@ -94,5 +96,32 @@ public class BankController {
 		System.out.println(transaction.getRemark());
 		int id=loginService.addActivity(transaction);
 		return id;
+	}
+	@GetMapping("/forgotId")
+	public int sendOtpForUserId(@RequestParam long acno) {
+		
+		try {
+			int otp=loginService.CustIdOnEmail(acno);
+			return otp;
+		}catch(CustomerServiceException e) {
+			if(e.getMessage()=="User not registered for InternetBanking services..!")
+				return 2;
+			else
+				return 1;
+		}
+	}
+	@GetMapping("/getCustomerId")
+	public @ResponseBody String getCustomerId(@RequestParam long acno) {
+		String status;
+		try {
+			status=loginService.sendCustId(acno);
+//			return status;
+		}catch(CustomerServiceException e){
+			status=e.getMessage();
+			System.out.println(status);
+//			return status;
+		}
+		return status;
+		
 	}
 }
