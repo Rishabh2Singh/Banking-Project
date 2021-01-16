@@ -72,13 +72,24 @@ public class BankController {
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public @ResponseBody int add(@RequestBody Payee payee) {
+	public @ResponseBody int add(@RequestBody Payee payee) throws CustomerServiceException {
 //		int customerId=1356786291;
-		System.out.println("Into the adding payee");
-		System.out.println(payee.getCustId());
-		System.out.println(payee.getAcno());
-		int payeeId=loginService.addPayee(payee);
-		return payeeId;
+		try {
+			System.out.println("Into the adding payee");
+			System.out.println(payee.getCustId());
+			System.out.println(payee.getAcno());
+			int payeeId=loginService.addPayee(payee);
+			return payeeId;
+		}catch(CustomerServiceException e) {
+			if(e.getMessage()=="Invalid Payee Details") {
+				System.out.println(e.getMessage());
+				return 0;
+			}
+			else {
+				System.out.println(e.getMessage());
+				return 1;
+			}
+		}
 	}
 	@RequestMapping(value="/getAcc", method=RequestMethod.GET)
 	public @ResponseBody long fetchAcc(@RequestParam(name="custId") int custId) {
@@ -88,14 +99,15 @@ public class BankController {
 		return acno;
 	}
 	@RequestMapping(value="/transaction", method=RequestMethod.POST)
-	public @ResponseBody int addTransaction(@RequestBody Transaction transaction) {
-		System.out.println(transaction.getFromAc());
-		System.out.println(transaction.getToAc());
-		System.out.println(transaction.getAmt());
-		System.out.println(transaction.getType());
-		System.out.println(transaction.getRemark());
-		int id=loginService.addActivity(transaction);
-		return id;
+	public @ResponseBody int addTransaction(@RequestBody Transaction transaction) throws CustomerServiceException {
+
+		try {
+			int id=loginService.addActivity(transaction);
+			return id;
+		}
+		catch(CustomerServiceException e) {
+			return 0;
+		}
 	}
 	@GetMapping("/forgotId")
 	public int sendOtpForUserId(@RequestParam long acno) {

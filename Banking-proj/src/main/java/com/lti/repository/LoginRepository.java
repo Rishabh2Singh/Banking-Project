@@ -37,7 +37,7 @@ public class LoginRepository extends GenericRepository{
 			return custid;
 		}catch(NoResultException e) {
 			System.out.println("incorrect password");
-			throw new CustomerServiceException("Incorrect email/password");
+			throw new CustomerServiceException("Incorrect password");
 			
 		}
 	}
