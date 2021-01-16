@@ -27,7 +27,14 @@ public class AccountStatementController {
 			@RequestBody AccountStatementDto accountStatementDto) {
 		List<AccountStatementResDto> activities = accountStatementService.accountStatement(accountStatementDto);
 		AccountStatementListDto accountStatementListDto = new AccountStatementListDto();
-		accountStatementListDto.setResDto(activities);;
-		return accountStatementListDto;
+		if(activities.size()==0) {
+			accountStatementListDto.setMessage("No Transactions between these dates");
+			return accountStatementListDto;
+		}
+		else {
+			accountStatementListDto.setMessage("Transaction List");
+			accountStatementListDto.setResDto(activities);
+			return accountStatementListDto;
+		}
 	}
 }
