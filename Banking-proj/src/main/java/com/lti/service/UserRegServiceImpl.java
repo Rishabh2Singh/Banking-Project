@@ -67,7 +67,7 @@ public class UserRegServiceImpl implements UserRegService {
 		System.out.println(fetAcc.getAccountNo());
 		
 		String subject = "Account Registration Details";
-		String message ="Your A/C number is: "+fetAcc.getAccountNo();
+		String message ="RICA Bank"+"Account Registration Successfully Completed \n"+"Your A/C number is: "+fetAcc.getAccountNo()+"\n Your account will get activated soon!";
 		emailService.sendEmail(reg.getEmail(),subject , message);
 		
 		return fetHol;

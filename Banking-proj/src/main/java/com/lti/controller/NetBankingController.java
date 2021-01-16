@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.NetBanking;
-import com.lti.entity.Account;
-import com.lti.entity.InternetBanking;
+import com.lti.dto.Status;
+import com.lti.dto.Status.StatusType;
 import com.lti.service.AccountService;
 import com.lti.service.NetBankingService;
 
@@ -23,10 +23,18 @@ public class NetBankingController {
 	private NetBankingService netBankingService;
 	
 	@PostMapping("/netbanking")
-	public void netBanking(@RequestBody NetBanking net) throws Exception
+	public Status netBanking(@RequestBody NetBanking net) throws Exception
 	{
-		netBankingService.enableNetBanking(net);
-		
+		String res = netBankingService.enableNetBanking(net);
+		Status status = new Status();
+		if(res.equals("Successfully registered")) {
+		status.setStatus(StatusType.SUCCESS);
+		status.setMessage(res);}
+		else {
+			status.setStatus(StatusType.FAILED);
+			status.setMessage(res);
+		}
+		return status;
 	}
 
 }

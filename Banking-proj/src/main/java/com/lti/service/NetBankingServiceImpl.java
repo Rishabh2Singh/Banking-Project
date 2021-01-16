@@ -16,7 +16,7 @@ public class NetBankingServiceImpl implements NetBankingService {
 	private NetBankingRepository netBankingRepository;
 	
 	@Transactional
-	public void enableNetBanking(NetBanking net) throws Exception {
+	public String enableNetBanking(NetBanking net) throws Exception {
 		
 		long accNo = net.getAccountNo();
 		Account accountObj = netBankingRepository.fetch(Account.class, net.getAccountNo());
@@ -27,14 +27,14 @@ public class NetBankingServiceImpl implements NetBankingService {
 		if(accountObj == null)
 		{
 			//throw new Exception("Invalid AccountNumber!");
-			System.out.println("Invalid AccountNumber!");
+			 return "Invalid AccountNumber!";
 		}
 		else if(accountObj.getStatus() != 1)
 		{
 			//throw new Exception("Account not activated!");
-			System.out.println("Account not activated!");
+			return "Account not activated!";
 		}
-		else if(accountObj.getStatus() == 1 )
+		else 
 		{
 			intBank.setLoginPass(net.getLoginPass());
 			intBank.setTransPass(net.getTransPass());
@@ -42,6 +42,8 @@ public class NetBankingServiceImpl implements NetBankingService {
 			
 			InternetBanking fetIb = (InternetBanking) netBankingRepository.save(intBank);
 			accountObj.setInternetBanking(fetIb);
+			
+			return "Successfully registered";
 		}
 		
 		
