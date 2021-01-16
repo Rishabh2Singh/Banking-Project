@@ -6,6 +6,16 @@ import com.lti.entity.Activity;
 
 public class AccountStatementListDto {
 
+	private String message;
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	private List<AccountStatementResDto> resDto;
 	
 	public List<AccountStatementResDto> getResDto() {

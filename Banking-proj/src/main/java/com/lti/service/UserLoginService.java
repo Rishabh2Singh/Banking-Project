@@ -16,10 +16,14 @@ public interface UserLoginService {
 
 	public List<Payee> fetchBeneficiary(int custId);
 
-	public int addPayee(Payee payee);
+	public int addPayee(Payee payee) throws CustomerServiceException;
 //	public List<Account> fetchAccount(int i);
 
 	public long fetchAccountNo(int custId);
 
-	public int addActivity(Transaction transaction);
+	public int addActivity(Transaction transaction) throws CustomerServiceException;
+	
+	public int CustIdOnEmail(long acno) throws CustomerServiceException;
+	
+	public String sendCustId(long acno) throws CustomerServiceException;
 }
