@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class AccountHolderOccu {
 
 	@Id
-	@SequenceGenerator(name="seq_occu", initialValue=205, allocationSize=1)
+	@SequenceGenerator(name="seq_occu", initialValue=207, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_occu")
 	//@GeneratedValue
 	private int id;

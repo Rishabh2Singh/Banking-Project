@@ -9,4 +9,6 @@ import com.lti.entity.Activity;
 public interface AccountStatementService {
 
 	public List<AccountStatementResDto> accountStatement(AccountStatementDto accountStatement);
+
+	public List<AccountStatementResDto> defaultAccountStatement(int cusId);
 }

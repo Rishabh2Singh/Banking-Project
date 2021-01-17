@@ -20,7 +20,6 @@ public class UpdateAccountDetailsController {
 	
 	@PostMapping("/updateDetails")
 	public @ResponseBody Status updateAccountDetails(@RequestBody UpdateAccountDetailsDto updateDetails) {
-		System.out.println("CusId"+updateDetails.getCusId());
 		return  updateAccountDetailsService.updateAccountDetails(updateDetails);
 	
 	}

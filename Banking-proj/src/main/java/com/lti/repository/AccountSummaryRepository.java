@@ -26,6 +26,7 @@ public class AccountSummaryRepository extends GenericRepository {
 		q.setParameter("accNo", account.getAccountNo());
 		q.setMaxResults(5);
 		List<Activity> miniStatement = q.getResultList();
+		System.out.println(miniStatement.size());
 		return miniStatement;
 	}
 }

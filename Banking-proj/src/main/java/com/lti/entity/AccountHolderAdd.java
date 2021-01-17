@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class AccountHolderAdd {
 
 	@Id
-	@SequenceGenerator(name="seq_add", initialValue=306, allocationSize=1)
+	@SequenceGenerator(name="seq_add", initialValue=307, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_add")
 	//@GeneratedValue
 	private int id;
