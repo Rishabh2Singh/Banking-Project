@@ -51,8 +51,16 @@ public class PayeeRepository extends GenericRepository{
 	}
 
 	public boolean isAccountActive(long acno) {
-		return (Long)entityManager.createQuery("select count(a) from Account a where a.accountNo= :acno and a.status=1")
+		return (Long)entityManager.createQuery("select count(a) from Account a where a.accountNo= :acno and a.status= :sta")
 				.setParameter("acno", acno)
+				.setParameter("sta", 1)
 				.getSingleResult()==1 ? true: false;
+	}
+	public int removePayee(long acno, int custId) {
+		Query q=entityManager.createQuery("update Beneficiary b set b.customer=1356786289 where b.account.accountNo= :acno and b.customer.customerId= :custId ");
+		q.setParameter("acno", acno);
+		q.setParameter("custId",custId);
+		int i=q.executeUpdate();
+		return i;
 	}
 }

@@ -26,4 +26,5 @@ public interface UserLoginService {
 	public int CustIdOnEmail(long acno) throws CustomerServiceException;
 	
 	public String sendCustId(long acno) throws CustomerServiceException;
+	public String removePayeeDetails(long acno, int custId);
 }

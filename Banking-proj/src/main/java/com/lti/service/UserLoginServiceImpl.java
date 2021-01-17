@@ -117,6 +117,15 @@ public class UserLoginServiceImpl implements UserLoginService{
 			payeeRepo.debitBalance(transaction.getAmt(), transaction.getFromAc());
 			payeeRepo.creditBalance(transaction.getAmt(), transaction.getToAc());
 		
+			String email=forgetUserRepo.fetchEmailByAccountNo(transaction.getFromAc());
+			String subject="Account balance update for your bank account";
+			String mssg="Dear customer, "+transaction.getAmt()+" has been debited from your account. Your transaction id is "+fetAct.getId()+". If this is not you then kindly report to your near branch of RICA bank. Thank you.";
+			emailService.sendEmail(email, subject, mssg);
+			
+			email=forgetUserRepo.fetchEmailByAccountNo(transaction.getToAc());
+			mssg="Dear customer, "+transaction.getAmt()+" has been credited to your account. Thank you.";
+			emailService.sendEmail(email, subject, mssg);
+			
 			Activity recieverAct=new Activity();
 			recieverAct.setAmount(transaction.getAmt());
 			recieverAct.setAccountInv(transaction.getFromAc());
@@ -147,7 +156,7 @@ public class UserLoginServiceImpl implements UserLoginService{
 			int custId=forgetUserRepo.fetchCustIdByAccountNo(acno);
 			int randomNum = ThreadLocalRandom.current().nextInt(100000, 999999);
 			String message="Your One Time Password(OTP) for getting your CustomerId is "+randomNum;
-//			emailService.sendEmail("rishsingh538@gmail.com", subject, message);
+			emailService.sendEmail(email, subject, message);
 			System.out.println("Otp sent");
 			return randomNum;
 		}
@@ -163,10 +172,20 @@ public class UserLoginServiceImpl implements UserLoginService{
 			int custId=forgetUserRepo.fetchCustIdByAccountNo(acno);
 			String subject="Regenerated CustomerId";
 			String message="Dear customer, Thank you for choosing our bank services. Your request for sending your customer Id is approved. Here is your customer Id: "+custId;
-//			emailService.sendEmail("rishsingh538@gmail.com", subject, message);
+			emailService.sendEmail(email, subject, message);
 			String status="Customer Id is successfully sent";
 			System.out.println(status);
 			return status;
+		}
+	}
+	public String removePayeeDetails(long acno, int custId) {
+		
+		int i=payeeRepo.removePayee(acno, custId);
+		if(i>=1) {
+			return "Removed successfully";
+		}
+		else {
+			return "Removal failed";
 		}
 	}
 }

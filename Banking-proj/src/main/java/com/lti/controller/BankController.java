@@ -136,4 +136,12 @@ public class BankController {
 		return status;
 		
 	}
+	
+	@GetMapping("/removePayee")
+	public String removePayee(@RequestParam(name="acno") long acno, @RequestParam(name="custId") int custId) {
+		
+		System.out.println(acno+" "+custId);
+		String status=loginService.removePayeeDetails(acno, custId);
+		return status;
+	}
 }
