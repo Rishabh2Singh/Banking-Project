@@ -67,9 +67,9 @@ public class InternetBanking {
 	public void setBeneficiaries(List<Beneficiary> beneficiaries) {
 		this.beneficiaries = beneficiaries;
 	}
-//	public Account getAccount() {
-//		return account;
-//	}
+	public Account getAccount() {
+		return account;
+	}
 	public void setAccount(Account account) {
 		this.account = account;
 	}
