@@ -18,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Admin {
 
 	@Id
-	@SequenceGenerator(name="seq_adm", initialValue=101, allocationSize=1)
+	@SequenceGenerator(name="seq_adm", initialValue=102, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_adm")
 	private int id;
 	

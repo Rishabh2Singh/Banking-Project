@@ -15,17 +15,10 @@ import com.lti.exception.CustomerServiceException;
 public class LoginRepository extends GenericRepository{
 
 	public boolean isCustomerPresent(int id) {
-		return (Long)entityManager.createQuery("select count(i.customerId) from InternetBanking i where i.customerId= :id")
+		return (Long)entityManager.createQuery("select count(i.customerId) from InternetBanking i where i.customerId= :id and i.status=1")
 				.setParameter("id", id)
 				.getSingleResult()==1 ? true: false;
-//		Query q=entityManager.createQuery("select count(i.customerId) from InternetBanking i where i.customerId = :id");
-//		q.setParameter("id", id);
-//		int c=(int)q.getSingleResult();
-////		System.out.println(c);
-//		if(c==1)
-//			return true;
-//		else
-//			return false;
+
 	}
 	public long findByLoginDetail(int id, String password) throws CustomerServiceException {
 		try {

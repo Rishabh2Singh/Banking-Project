@@ -27,7 +27,6 @@ import com.lti.service.AdminLoginService;
 import com.lti.service.UserLoginService;
 
 @RestController
-
 @CrossOrigin
 public class AdminController {
 
@@ -35,19 +34,19 @@ public class AdminController {
 	private AdminLoginService adminloginService;
 
 	@PostMapping("/adminlogin")
-	public @ResponseBody AdminInfo loginCheck(@RequestBody AdminLogin al) {
+	public @ResponseBody AdminInfo loginCheck(@RequestBody AdminLogin al)  {
 
 		AdminInfo ad = null;
 		try {
 			System.out.println(" fetched values :" + al.getEmail() + "  " + al.getPassword());
 			ad = adminloginService.adminLogin((String)al.getEmail(), (String)al.getPassword());
-		} catch (UserLoginException e) {
-			e.printStackTrace();
-			System.out.println("Execption Occured while fetching login details : " + e);
+			ad.setStatus("success");
+			return ad;
+		} catch (UserLoginException | CustomerServiceException e) {
+//			ad.setStatus(e.getMessage());
+			System.out.println(e.getMessage());
+			return null;
 		}
-		// System.out.println(ad.getContact()+" "+);
-		System.out.println("Fetched obj :" + ad);
-		return ad;
 	}
 	
 	@PostMapping("/approveCustomer")

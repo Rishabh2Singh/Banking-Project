@@ -4,6 +4,7 @@ import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -19,31 +20,37 @@ import com.lti.entity.AccountHolder;
 import com.lti.entity.Admin;
 import com.lti.entity.ApprovalActivity;
 import com.lti.entity.InternetBanking;
+import com.lti.exception.CustomerServiceException;
 
 @Repository
 public class AdminLoginRepository extends GenericRepository {
 
-	public AdminInfo fetchAdmin(String email,String password) {
+	public boolean isAdminPresent(String email) {
+		return (Long)entityManager.createQuery("select count(a.id) from Admin a where a.email= :email")
+				.setParameter("email", email)
+				.getSingleResult()==1 ? true: false;
+
+	}
+	
+	public AdminInfo fetchAdmin(String email,String password) throws CustomerServiceException {
 
 		
-		System.out.println("email received :"+email+"password received :"+password);
-		Query q = entityManager.createQuery("select al from Admin al where al.email= :email");
-		q.setParameter("email", email);
-		//q.setParameter("password", password);
-		Admin ad =(Admin) q.getSingleResult();
-		AdminInfo af=new AdminInfo();
-		
-		af.setContact(ad.getContact());
-		af.setDesignation(ad.getDesignation());
-		af.setEmail(ad.getEmail());
-		af.setId(ad.getId());
-		af.setName(ad.getName());
-		
+		try {
+			Query q = entityManager.createQuery("select a from Admin a where a.email= :email and a.password= :pass");
+			q.setParameter("email", email);
+			q.setParameter("pass", password);
+			Admin ad =(Admin) q.getSingleResult();
+			AdminInfo af=new AdminInfo();
+			
+			af.setContact(ad.getContact());
+			af.setDesignation(ad.getDesignation());
+			af.setEmail(ad.getEmail());
+			af.setName(ad.getName());
 
-		//System.out.println("email received At repo : " + ad);
-		
-
-		return af;
+			return af;
+		}catch(NoResultException e) {
+			throw new CustomerServiceException("Incorrect Password");
+		}
 	}
 
 	public List<CustomerAccountDetails> fetchCustomers() {
@@ -142,7 +149,7 @@ public class AdminLoginRepository extends GenericRepository {
 	public void approveCustomer(int holderId) {
 		System.out.println("###########" + holderId);
 		Query q = entityManager
-				.createQuery("update Account ah set ah.status = '1' where ah.accountHolder.id= :hid");
+				.createQuery("update Account ah set ah.status = 1 where ah.accountHolder.id= :hid");
 		q.setParameter("hid", holderId);
 		System.out.println("Query : "+q);
 		q.executeUpdate();
@@ -182,7 +189,7 @@ public class AdminLoginRepository extends GenericRepository {
 		System.out.println("customer no fetched from db "+rs.getInternetBanking().getCustomerId());
 		int customerid=rs.getInternetBanking().getCustomerId();
 		Query q1 = entityManager
-				.createQuery("update InternetBanking ab set ab.status = '1' where ab.customerId= :holderId1");
+				.createQuery("update InternetBanking ab set ab.status = 1 where ab.customerId= :holderId1");
 		q1.setParameter("holderId1", customerid);
 
 		q1.executeUpdate();

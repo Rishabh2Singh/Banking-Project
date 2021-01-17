@@ -13,6 +13,7 @@ import com.lti.dto.CustomerAccountDetails;
 import com.lti.dto.CustomerDetails;
 import com.lti.dto.InternetBankingApprovalDetails;
 import com.lti.dto.InternetBankingDetails;
+import com.lti.entity.Account;
 import com.lti.entity.AccountHolder;
 import com.lti.entity.Admin;
 import com.lti.exception.CustomerServiceException;
@@ -27,10 +28,17 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 	@Autowired
 	public AdminLoginRepository adminLoginRepo;
 	
-	public AdminInfo adminLogin(String email, String password) {
-		AdminInfo ad=null;
-		ad = adminLoginRepo.fetchAdmin(email,password);
-		return ad;
+	@Autowired
+	private EmailService emailService;
+	
+	public AdminInfo adminLogin(String email, String password) throws CustomerServiceException {
+		if(!adminLoginRepo.isAdminPresent(email)) {
+			throw new CustomerServiceException("Admin not present");
+		}
+		else {
+			AdminInfo adminInfo = adminLoginRepo.fetchAdmin(email,password);
+			return adminInfo;
+		}
 	}
 	
 	public List<CustomerDetails> getCustomerAndAccountDetails(int holderId) {
@@ -40,6 +48,13 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 	public void approveCustomerByHolderId(int holderId) {
 		
 		adminLoginRepo.approveCustomer(holderId);
+		
+		AccountHolder accHol=adminLoginRepo.fetch(AccountHolder.class, holderId);
+		String email=accHol.getEmail();
+		String subject="Account approval update";
+		String mssg="Greetings. Dear "+accHol.getName()+", your request for account creation ("+accHol.getAccount().getAccountNo()+") has been approved by RICA bank. We are delighted to have you in our RICA family. In case of any bank related queries and services please contact to our nearest branch. Thank you.";
+		emailService.sendEmail(email, subject, mssg);
+		
 		
 	}
 
@@ -60,6 +75,12 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 	public int approveCustomerInternetBanking(long holderId) {
 		System.out.println("called at service ");
 		int rs=adminLoginRepo.InternetBankingChangeStatus(holderId);
+
+		Account acc=adminLoginRepo.fetch(Account.class, holderId);
+		String email=acc.getAccountHolder().getEmail();
+		String subject="Customer ID approval update";
+		String mssg="Greetings. Dear "+acc.getAccountHolder().getName()+", your request for internet banking (ID:"+acc.getInternetBanking().getCustomerId()+") has been approved by RICA bank. We are delighted to have you in our RICA internet banking family. Hope this services will make your daily activities easier. In case of any bank related queries and services please contact to our nearest branch. Thank you.";
+		emailService.sendEmail(email, subject, mssg);
 		
 		return rs;
 	}

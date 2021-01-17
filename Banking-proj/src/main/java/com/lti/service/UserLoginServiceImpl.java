@@ -168,8 +168,11 @@ public class UserLoginServiceImpl implements UserLoginService{
 			throw new CustomerServiceException("Invalid Account Number!");
 		}
 		else {
+			System.out.println(acno);
 			String email=forgetUserRepo.fetchEmailByAccountNo(acno);
+			System.out.println(email);
 			int custId=forgetUserRepo.fetchCustIdByAccountNo(acno);
+			System.out.println(custId);
 			String subject="Regenerated CustomerId";
 			String message="Dear customer, Thank you for choosing our bank services. Your request for sending your customer Id is approved. Here is your customer Id: "+custId;
 			emailService.sendEmail(email, subject, message);

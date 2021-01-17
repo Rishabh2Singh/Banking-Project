@@ -15,7 +15,7 @@ import com.lti.exception.UserLoginException;
 
 public interface AdminLoginService {
 
-	public AdminInfo adminLogin(String email, String password) throws UserLoginException;
+	public AdminInfo adminLogin(String email, String password) throws UserLoginException, CustomerServiceException;
 	
 	public List<CustomerDetails> getCustomerAndAccountDetails(int holderId);
 	
