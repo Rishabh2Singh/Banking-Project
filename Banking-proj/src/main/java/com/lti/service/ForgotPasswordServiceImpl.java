@@ -29,7 +29,7 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService {
 			String subject = "Link to Reset Password";
 			String message = "Click th link below to reset password \n" + "http://localhost:4200/forgotpassword?cid="+
 			account.getInternetBanking().getCustomerId();
-			emailService.sendEmail("rishsingh538@gmail.com", subject, message);
+			emailService.sendEmail(email, subject, message);
 			forgotPwd.setStatusMsg(account.getAccountHolder().getName()+" Kindly check ur registered mail"
 					+ " to reset password!!");
 			return forgotPwd;

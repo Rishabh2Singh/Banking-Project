@@ -95,12 +95,13 @@ public class UserLoginServiceImpl implements UserLoginService{
 	}
 	@Override
 	public int addActivity(Transaction transaction) throws CustomerServiceException {
-		Activity act=new Activity();
+		
 		Account acc=payeeRepo.fetch(Account.class, transaction.getFromAc());
 		Account acc2=payeeRepo.fetch(Account.class, transaction.getToAc());
 		String transactionType="";
 		Activity fetAct=null;
 		if(transaction.getAmt()<acc.getBalance()) {
+			Activity act=new Activity();
 			act.setAmount(transaction.getAmt());
 			act.setAccountInv(transaction.getToAc());
 			act.setDate(LocalDate.now());
@@ -133,11 +134,10 @@ public class UserLoginServiceImpl implements UserLoginService{
 			recieverAct.setTime(LocalTime.now());
 			transactionType=transaction.getType();
 			transactionType=transactionType+" Recieve";
-			act.setType(transactionType);
+			recieverAct.setType(transactionType);
 			recieverAct.setRemark(transaction.getRemark());
 			recieverAct.setAccount(acc2);
-			
-			Activity fetAct2=(Activity) payeeRepo.save(act);
+			Activity fetAct2=(Activity) payeeRepo.save(recieverAct);
 		}
 		else {
 			throw new CustomerServiceException("Insufficient Balance");
